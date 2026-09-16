@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* Mode sombre piloté par la classe .dark sur <html> (ThemeContext),
+   pas par la préférence système : sans cette ligne, les classes dark:
+   suivraient prefers-color-scheme et ignoreraient le bouton. */
+@custom-variant dark (&:where(.dark, .dark *));
