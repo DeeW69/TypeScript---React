@@ -1,4 +1,3 @@
-// src/pages/PageIntrouvable.tsx
 export function PageIntrouvable() {
   return (
     <div className="text-center">

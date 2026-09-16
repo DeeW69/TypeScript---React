@@ -1,4 +1,3 @@
-// src/pages/Connexion.tsx
 import { useState, type ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Bouton } from "../composants/Bouton";
@@ -20,7 +19,6 @@ export function Connexion() {
     const nettoye = pseudo.trim();
     if (!nettoye) return;
     connecter(nettoye);
-    // BONUS 7 : on renvoie l'utilisateur là où il allait, pas toujours à l'accueil.
     naviguer(etat?.de ?? "/", { replace: true });
   };
 

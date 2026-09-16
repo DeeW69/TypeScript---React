@@ -1,4 +1,3 @@
-// src/pages/DetailFilm.tsx
 import { useParams } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch";
 import { afficheDisponible, urlDetail, type FilmDetailOmdb } from "../lib/omdb";

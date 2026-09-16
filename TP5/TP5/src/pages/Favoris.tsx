@@ -1,4 +1,3 @@
-// src/pages/Favoris.tsx
 import { CarteFilm } from "../composants/CarteFilm";
 import { Bouton } from "../composants/Bouton";
 import { useFavoris } from "../contextes/FavorisContext";

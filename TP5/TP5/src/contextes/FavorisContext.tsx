@@ -1,9 +1,3 @@
-// src/contextes/FavorisContext.tsx
-//
-// Même patron que AuthContext, mais l'état est piloté par un reducer.
-// BONUS 8 inclus : lecture de localStorage à l'initialisation du
-// useReducer, écriture dans un effet qui dépend de l'état — jamais dans
-// le reducer, qui reste une fonction pure.
 import { createContext, useContext, useEffect, useReducer, type Dispatch, type ReactNode } from "react";
 import type { FilmOmdb } from "../lib/omdb";
 
@@ -14,11 +8,13 @@ type ActionFavoris =
 
 function reducerFavoris(etat: FilmOmdb[], action: ActionFavoris): FilmOmdb[] {
   switch (action.type) {
-    case "ajouter":
-      // Un utilisateur qui clique deux fois sur le même film est le cas
-      // normal : pas de doublon.
-      if (etat.some((f) => f.imdbID === action.film.imdbID)) return etat;
+    case "ajouter": {
+      const existeDeja = etat.some((f) => f.imdbID === action.film.imdbID);
+      if (existeDeja) {
+        return etat;
+      }
       return [...etat, action.film];
+    }
     case "retirer":
       return etat.filter((f) => f.imdbID !== action.id);
     case "vider":
@@ -29,9 +25,12 @@ function reducerFavoris(etat: FilmOmdb[], action: ActionFavoris): FilmOmdb[] {
 const CLE_STOCKAGE = "tp5-favoris";
 
 function chargerFavoris(favorisParDefaut: FilmOmdb[]): FilmOmdb[] {
+  const brut = localStorage.getItem(CLE_STOCKAGE);
+  if (!brut) {
+    return favorisParDefaut;
+  }
   try {
-    const brut = localStorage.getItem(CLE_STOCKAGE);
-    return brut ? (JSON.parse(brut) as FilmOmdb[]) : favorisParDefaut;
+    return JSON.parse(brut) as FilmOmdb[];
   } catch {
     return favorisParDefaut;
   }
@@ -51,7 +50,9 @@ export function FavorisProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(CLE_STOCKAGE, JSON.stringify(favoris));
   }, [favoris]);
 
-  return <Contexte.Provider value={{ favoris, dispatch }}>{children}</Contexte.Provider>;
+  return (
+    <Contexte.Provider value={{ favoris, dispatch }}>{children}</Contexte.Provider>
+  );
 }
 
 export function useFavoris(): FavorisContexte {

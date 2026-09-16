@@ -1,7 +1,3 @@
-// src/pages/Recherche.tsx
-//
-// Le composant du TP4, réécrit avec useFetch au lieu du fetch écrit à la
-// main : c'est exactement la même logique, sortie dans le hook générique.
 import { useState, type ChangeEvent } from "react";
 import { Link } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch";
@@ -29,8 +25,6 @@ export function Recherche() {
       return <p className="text-red-600">{erreur}</p>;
     }
 
-    // OMDB répond ainsi aussi bien pour « aucun résultat » que pour une
-    // vraie erreur (clé invalide, etc.) : il faut distinguer les deux.
     if (donnees?.Response === "False") {
       if (donnees.Error === "Movie not found!") {
         return <p className="text-slate-500">Aucun film ne correspond à « {terme} ».</p>;
